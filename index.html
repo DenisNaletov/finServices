@@ -11,37 +11,34 @@
       ipoteka: "finServiceIpotekaRu"
     };
 
-    const params = new URLSearchParams(window.location.search);
-    const product = params.get("product");
+    document.addEventListener("DOMContentLoaded", () => {
+      const params = new URLSearchParams(window.location.search);
+      const product = params.get("product");
+      const model = params.get("model");
 
-    if (product && map[product]) {
-      window.location.href = `/${map[product]}/index.html`;
-    } else {
-      document.addEventListener("DOMContentLoaded", () => {
+      let target = "";
+
+      if (model) {
+        target = model;
+      } else if (product && map[product]) {
+        target = map[product];
+      }
+
+      if (target) {
+        window.location.href = `/${target}/index.html`;
+      } else {
         document.getElementById("main-content").innerHTML = `
-          <h2>Ошибка: продукт не найден</h2>
+          <h2>Ошибка: продукт не выбран</h2>
           <p>Пожалуйста, выберите нужный продукт на сайте.</p>
           <div class="button-container">
             <a href="https://naletov.org/products/" class="btn">Выбор продукта</a>
             <a href="https://naletov.org/" class="btn btn-secondary">На главную</a>
           </div>
         `;
-      });
-    }
+      }
+    });
   </script>
 </head>
-
-  <script>
-  const params = new URLSearchParams(window.location.search);
-  const model = params.get('model');
-
-  if (model) {
-    // редиректим на нужную подстраницу
-    window.location.href = `/${model}/index.html`;
-  } else {
-    document.body.innerHTML = '<h2>Не указана модель</h2>';
-  }
-</script>
 
 <body>
   <header class="header">
