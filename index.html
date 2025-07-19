@@ -4,31 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FinService Loader</title>
+  <link rel="stylesheet" href="style.css" />
   <script>
     const map = {
       bizru: "finServiceRuSmallBusiness",
       ipoteka: "finServiceIpotekaRu"
-      // добавь свои ключи и папки здесь
     };
 
-    // Получить параметр product из URL
     const params = new URLSearchParams(window.location.search);
     const product = params.get("product");
 
     if (product && map[product]) {
-      // Перенаправление в нужную папку
       window.location.href = `/${map[product]}/index.html`;
     } else {
-      // Показать ошибку и кнопки возврата
       document.addEventListener("DOMContentLoaded", () => {
-        document.body.innerHTML = `
-          <div style="font-family: sans-serif; padding: 2rem; text-align: center;">
-            <h2>Ошибка: продукт не найден</h2>
-            <p>Пожалуйста, выберите нужный продукт на сайте.</p>
-            <div style="margin-top: 2rem;">
-              <a href="https://naletov.org/products/" style="margin: 0.5rem; padding: 0.7rem 1.2rem; background: #0070f3; color: white; border-radius: 6px; text-decoration: none;">Выбор продукта</a>
-              <a href="https://naletov.org/" style="margin: 0.5rem; padding: 0.7rem 1.2rem; background: #555; color: white; border-radius: 6px; text-decoration: none;">На главную</a>
-            </div>
+        document.getElementById("main-content").innerHTML = `
+          <h2>Ошибка: продукт не найден</h2>
+          <p>Пожалуйста, выберите нужный продукт на сайте.</p>
+          <div class="button-container">
+            <a href="https://naletov.org/products/" class="btn">Выбор продукта</a>
+            <a href="https://naletov.org/" class="btn btn-secondary">На главную</a>
           </div>
         `;
       });
@@ -36,5 +31,15 @@
   </script>
 </head>
 <body>
+  <header class="header">
+    <div class="logo-section">
+      <img src="Logo.png" alt="Logo" />
+      <span>Up&Grow Business Planner</span>
+    </div>
+  </header>
+
+  <main id="main-content" class="main-section">
+    <!-- Ошибка или редирект загрузится сюда -->
+  </main>
 </body>
 </html>
