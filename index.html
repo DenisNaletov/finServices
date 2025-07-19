@@ -30,6 +30,19 @@
     }
   </script>
 </head>
+
+  <script>
+  const params = new URLSearchParams(window.location.search);
+  const model = params.get('model');
+
+  if (model) {
+    // редиректим на нужную подстраницу
+    window.location.href = `/${model}/index.html`;
+  } else {
+    document.body.innerHTML = '<h2>Не указана модель</h2>';
+  }
+</script>
+
 <body>
   <header class="header">
     <div class="logo-section">
