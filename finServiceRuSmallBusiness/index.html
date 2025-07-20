@@ -61,7 +61,7 @@
   <body>
     <header class="header">
       <div class="logo-section">
-        <img src="LogoUpGrowSmall2.png" alt="Logo" />
+        <img src="Logo.png" alt="Logo" />
         <span>Up&Grow Business Planner</span>
       </div>
     </header>
@@ -156,10 +156,10 @@
                 name="revenueGrowthPercent"
                 placeholder="Рост, %"
               />
-              <div class="input-hint">
-                Запланируйте рост выручки, например 2 % от начального значения
-                ежемесячной выручки
-              </div>
+  <div class="input-hint" id="hint-revenueGrowthPercent">
+    <span class="close-tooltip" onclick="hideTooltip('hint-revenueGrowthPercent')">×</span>
+    Запланируйте рост выручки, например 2 % от начального значения ежемесячной выручки
+  </div>
             </div>
             <div class="input-with-icon">
               <i class="fa fa-clock"></i>
