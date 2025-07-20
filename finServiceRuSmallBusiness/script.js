@@ -79,3 +79,8 @@ document.getElementById("details-toggler").addEventListener("click", (e) => {
     toggler.textContent = "Скрыть ▲";
   }
 });
+
+function hideTooltip(id) {
+  const el = document.getElementById(id);
+  if (el) el.style.display = "none";
+}
