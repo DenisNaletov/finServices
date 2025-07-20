@@ -31,7 +31,7 @@ document.getElementById("financeForm").addEventListener("submit", async (e) => {
     '<i class="fa fa-spinner fa-spin"></i> Выполняется расчет...';
 
   try {
-    const resp = await fetch("http://localhost:8088/api/finance/calculate", {
+  const resp = await fetch("https://exotic-ainslee-upgrow-0577c1d4.koyeb.app/api/finance/calculate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
