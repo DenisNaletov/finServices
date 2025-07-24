@@ -223,11 +223,9 @@ button[type='submit']:hover {
 
 /* Подсказки с крестиком */
 .input-hint {
+    position: relative;
     display: block;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
+    margin-top: 5px;
     background: #ffffff;
     border: 1px solid #cce0ff;
     color: #333;
@@ -235,20 +233,20 @@ button[type='submit']:hover {
     padding: 8px 25px 8px 10px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 115, 230, 0.1);
-    z-index: 1000;
+    z-index: 10;
     animation: slideFadeIn 0.25s ease;
 }
 
-/* Кнопка закрытия */
 .close-tooltip {
     position: absolute;
-    top: 6px;
-    right: 8px;
+    top: 4px;
+    right: 6px;
     font-size: 16px;
     font-weight: bold;
     color: #666;
     cursor: pointer;
     line-height: 1;
+    user-select: none;
 }
 
 @keyframes slideFadeIn {
@@ -268,7 +266,7 @@ button[type='submit']:hover {
         max-width: 90vw;
     }
     .close-tooltip {
-        top: 6px;
-        right: 8px;
+        top: 4px;
+        right: 6px;
     }
 }
