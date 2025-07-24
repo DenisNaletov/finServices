@@ -104,6 +104,7 @@ legend {
     transform: translateY(-50%);
     color: #999;
     font-size: 0.9rem;
+    pointer-events: none;
 }
 
 .input-with-icon input,
@@ -117,7 +118,6 @@ legend {
     background: #fff;
     font-size: 0.95rem;
     appearance: none;
-    /* чтобы отключить стандартную стрелку */
     background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23666' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
@@ -202,13 +202,11 @@ button[type='submit']:hover {
 }
 
 @media (max-width: 768px) {
-
     .row-four input,
     .row-four select {
         flex: 1 1 100%;
         min-width: unset;
     }
-
     .row input,
     .row select,
     .input-with-icon,
@@ -217,21 +215,15 @@ button[type='submit']:hover {
         flex: 1 1 100%;
         min-width: unset;
     }
-
     .header {
         flex-direction: column;
         align-items: flex-start;
     }
 }
 
-.input-with-icon {
-    position: relative;
-    flex: 1 1 calc(33.333% - 10px);
-    min-width: 200px;
-}
-
+/* Подсказки с крестиком */
 .input-hint {
-    display: none;
+    display: block;
     position: absolute;
     top: 100%;
     left: 0;
@@ -240,66 +232,14 @@ button[type='submit']:hover {
     border: 1px solid #cce0ff;
     color: #333;
     font-size: 0.85rem;
-    padding: 8px 10px;
+    padding: 8px 25px 8px 10px;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0, 115, 230, 0.1);
-    z-index: 10;
+    z-index: 1000;
     animation: slideFadeIn 0.25s ease;
 }
 
-.input-with-icon:has(input:focus) .input-hint,
-.input-with-icon:hover .input-hint,
-.input-with-icon:has(select:focus) .input-hint {
-    display: block;
-}
-
-@keyframes slideFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(-4px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Убедимся, что иконки не прыгают */
-.input-with-icon i {
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    font-size: 0.9rem;
-    pointer-events: none;
-}
-
-.details-toggle {
-    margin: 10px 0 25px;
-    font-size: 0.95rem;
-}
-
-#details-toggler {
-    color: #0073e6;
-    text-decoration: underline;
-    cursor: pointer;
-    display: inline-block;
-}
-
-#details-content {
-    display: none;
-    margin-top: 10px;
-    padding: 12px 16px;
-    background: #f0f8ff;
-    border-left: 4px solid #0073e6;
-    border-radius: 6px;
-    color: #333;
-    font-size: 0.9rem;
-    animation: slideFadeIn 0.25s ease;
-}
-
+/* Кнопка закрытия */
 .close-tooltip {
     position: absolute;
     top: 6px;
@@ -311,12 +251,22 @@ button[type='submit']:hover {
     line-height: 1;
 }
 
+@keyframes slideFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @media screen and (max-width: 768px) {
     .input-hint {
         font-size: 15px;
         max-width: 90vw;
     }
-
     .close-tooltip {
         top: 6px;
         right: 8px;
