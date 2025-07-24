@@ -1,314 +1,90 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Up&Grow Business Planner</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-      integrity="sha512-..."
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="icon" href="Logo.png" type="image/png" />
-    <!-- внутри head -->
-    <style>
-      .tooltip {
-        position: relative;
-        display: inline-block;
-        cursor: pointer;
-        margin-left: 6px;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FinService Loader</title>
+  <link rel="stylesheet" href="style.css" />
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Логика редиректа
+      const map = {
+        bizru: "finServiceRuSmallBusiness",
+        ipoteka: "finServiceIpotekaRu"
+      };
+
+      const params = new URLSearchParams(window.location.search);
+      const product = params.get("product");
+      const model = params.get("model");
+
+      let target = model || (product && map[product]);
+
+      if (target) {
+        window.location.href = `/${target}/index.html`;
+      } else {
+        document.getElementById("main-content").innerHTML = `
+          <h2>Ошибка: продукт не выбран</h2>
+          <p>Пожалуйста, выберите нужный продукт на сайте.</p>
+          <div class="button-container">
+            <a href="https://naletov.org/products/" class="btn">Выбор продукта</a>
+            <a href="https://naletov.org/" class="btn btn-secondary">На главную</a>
+          </div>
+        `;
       }
 
-      .tooltip .tooltiptext {
-        visibility: hidden;
-        width: 260px;
-        background-color: #333;
-        color: #fff;
-        text-align: left;
-        border-radius: 6px;
-        padding: 8px 10px;
-        position: absolute;
-        z-index: 1;
-        bottom: 125%;
-        left: 50%;
-        transform: translateX(-50%);
-        opacity: 0;
-        transition: opacity 0.3s;
-        font-size: 0.8rem;
-      }
+      // Логика закрытия подсказок
+      document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("close-tooltip")) {
+          const hint = e.target.closest(".input-hint");
+          hint.style.display = "none";
+        }
+      });
+    });
+  </script>
+</head>
 
-      .tooltip:hover .tooltiptext {
-        visibility: visible;
-        opacity: 1;
-      }
+<body>
+  <header class="header">
+    <div class="logo-section">
+      <img src="LogoUpGrowSmall2.png" alt="Logo" />
+      <span>Up&Grow Business Planner</span>
+    </div>
+  </header>
 
-      .tooltip .tooltiptext::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: #333 transparent transparent transparent;
-      }
-    </style>
-  </head>
-
-  <body>
-    <header class="header">
-      <div class="logo-section">
-        <img src="LogoUpGrowSmall2.png" alt="Logo" />
-        <span>Up&Grow Business Planner</span>
-      </div>
-    </header>
-
-    <main>
-      <h1>Генератор финансовой модели для малого бизнеса. Ver. R.003</h1>
-      <p class="hint">
-        <div class="details-toggle">
-  <a href="#" id="details-toggler">Подробнее о сервисе финансовой модели ▼</a>
-  <div id="details-content">
-    <p>Заполните форму для получения расчета. Чем больше данных, тем точнее результат. Мы гарантируем конфиденциальность.
-      Этот калькулятор помогает оценить эффективность вашего бизнеса: рассчитать операционную и чистую прибыль, срок окупаемости и другие ключевые показатели. Вы можете вводить как точные, так и примерные значения — всё, кроме обязательных полей, опционально. Удачи!
-    </p>
-  </div>
-</div>
-
-      </p>
-
-      <form id="financeForm" class="form-container">
-        <!-- Общие данные -->
-        <fieldset>
-          <legend>Общие данные</legend>
-          <div class="row">
-            <div class="input-with-icon">
-              <i class="fa fa-user"></i>
-              <input type="text" name="fullname" placeholder="Имя" required />
-            </div>
-            <div class="input-with-icon">
-              <i class="fa fa-envelope"></i>
-              <input type="email" name="email" placeholder="Email" required />
-            </div>
-            <div class="input-with-icon">
-              <i class="fa fa-briefcase"></i>
-              <input
-                type="text"
-                name="businessName"
-                placeholder="Название проекта"
-              />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="input-with-icon">
-              <i class="fa fa-building"></i>
-              <select name="form" required>
-                <option value="">Тип предприятия</option>
-                <option value="ИП">ИП</option>
-                <option value="ООО">ООО</option>
-              </select>
-            </div>
-            <div class="input-with-icon">
-              <i class="fa fa-percent"></i>
-              <select name="taxSystem" required>
-                <option value="">Налоговая система</option>
-                <option value="usn_6">УСН 6%</option>
-                <option value="usn_15">УСН 15%</option>
-                <option value="osno">ОСНО</option>
-                <option value="patent">Патент</option>
-              </select>
-            </div>
-            <div class="input-with-icon">
-              <i class="fa fa-calendar"></i>
-              <input
-                type="number"
-                name="horizon"
-                placeholder="Срок планирования, лет"
-                min="1"
-                max="20"
-                required
-              />
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- Доходы -->
-        <fieldset>
-          <legend>Доходы ежемесячные, тыс ₽</legend>
-          <div class="row">
-            <div class="input-with-icon">
-              <i class="fa fa-chart-line"></i>
-              <input
-                type="number"
-                name="revenue"
-                placeholder="Выручка"
-                required
-              />
-            </div>
-            <div class="input-with-icon">
-              <i class="fa fa-arrow-up"></i>
-              <input
-                type="number"
-                name="revenueGrowthPercent"
-                placeholder="Рост, %"
-              />
-  <div class="input-hint" id="hint-revenueGrowthPercent">
-    <span class="close-tooltip" onclick="hideTooltip('hint-revenueGrowthPercent')">×</span>
-    Запланируйте рост выручки, например 2 % от начального значения ежемесячной выручки
-  </div>
-            </div>
-            <div class="input-with-icon">
-              <i class="fa fa-clock"></i>
-              <select name="revenueGrowthPeriod">
-                <option value="">Период роста</option>
-                <option value="monthly">Каждый месяц</option>
-                <option value="2months">Каждые 2 мес</option>
-                <option value="quarter">Ежеквартально</option>
-                <option value="halfyear">Раз в полгода</option>
-              </select>
-              <div class="input-hint">
-                Запланируйте, как часто растет выручка, например планируем рост
-                2 % каждый месяц
-              </div>
-            </div>
-            <div class="input-with-icon">
-              <i class="fa fa-chart-line"></i>
-              <input
-                type="number"
-                name="otherIncome"
-                placeholder="Прочие доходы"
-              />
-              <div class="input-hint">
-                Денежные поступления кроме выручки, например доходы от акций,
-                поступления от другого направления бизнеса
-              </div>
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- Переменные -->
-        <fieldset>
-          <legend>Переменные расходы ежемесячные, тыс ₽</legend>
-          <div class="row">
-            <div class="input-with-icon">
-              <i class="fa fa-sliders-h"></i>
-              <select name="variableExpensesIsPercent">
-                <option value="true">в % от выручки</option>
-                <option value="false">в рублях</option>
-              </select>
-              <div class="input-hint">
-                Выберите, как учесть переменные расходы - сумма в месяц или % от
-                месячной выручки
-              </div>
-            </div>
-            <div class="input-with-icon">
-              <i class="fa fa-ruble-sign"></i>
-              <input
-                type="number"
-                name="variableExpensesValue"
-                placeholder="Переменные расходы"
-              />
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- Постоянные -->
-        <fieldset>
-          <legend>Постоянные расходы ежемесячные, тыс ₽</legend>
-          <div class="row row-four">
+  <main id="main-content" class="main-section">
+    <div class="form-container">
+      <fieldset>
+        <legend>Пример ввода с подсказками</legend>
+        <div class="row">
+          <div class="input-with-icon">
+            <i class="fa fa-arrow-up"></i>
             <input
               type="number"
-              name="suppliesExpense"
-              placeholder="Закупки"
-              required
+              name="revenueGrowthPercent"
+              placeholder="Рост, %"
             />
-            <input type="number" name="salaryExpense" placeholder="Зарплата" />
-            <input type="number" name="rentExpense" placeholder="Аренда" />
-            <input type="number" name="otherExpense" placeholder="Прочие" />
-          </div>
-        </fieldset>
-
-        <!-- Инвестиции -->
-        <fieldset>
-          <legend>Инвестиционные данные</legend>
-          <div class="row row-four">
-            <div class="input-with-icon">
-              <input
-                type="number"
-                name="investment"
-                placeholder="Инвестиции, тыс ₽"
-              />
-              <div class="input-hint">
-                Сумма инвестиций, необходимая на старте проекта
-              </div>
-            </div>
-
-            <div class="input-with-icon">
-              <input
-                type="number"
-                name="loanPercent"
-                placeholder="% по кредиту"
-              />
-              <div class="input-hint">
-                Годовая процентная ставка по кредиту, которая может быть
-                согласована банком / инвестором
-              </div>
-            </div>
-
-            <div class="input-with-icon">
-              <input
-                type="number"
-                name="loanHoliday"
-                placeholder="Кредит. каникулы, мес"
-              />
-              <div class="input-hint">
-                Опциональные период развития проекта, который может быть
-                предоставлен инвестором. Когда вы не погашаете тело кредита
-                (например, первый год)
-              </div>
-            </div>
-
-            <div class="input-with-icon">
-              <input
-                type="number"
-                name="loanTerm"
-                placeholder="Срок кредита, лет"
-              />
-              <div class="input-hint">TO DO: Общий срок возврата кредита</div>
+            <div class="input-hint">
+              <span class="close-tooltip">&times;</span>
+              Запланируйте рост выручки, например 2 % от начального значения
+              ежемесячной выручки
             </div>
           </div>
-        </fieldset>
 
-        <p class="privacy">
-          Отправляя форму, вы соглашаетесь с
-          <a href="https://naletov.org/privacy-policies/" target="_blank"
-            >Политикой конфиденциальности</a
-          >.
-        </p>
-
-        <div style="text-align: center">
-          <button type="submit">Рассчитать</button>
+          <div class="input-with-icon">
+            <i class="fa fa-dollar-sign"></i>
+            <select name="pricingModel">
+              <option value="">Выберите модель</option>
+              <option value="fixed">Фиксированная</option>
+              <option value="dynamic">Динамическая</option>
+            </select>
+            <div class="input-hint">
+              <span class="close-tooltip">&times;</span>
+              Выберите модель ценообразования
+            </div>
+          </div>
         </div>
-      </form>
-
-      <div id="result" class="result-box">
-        <i class="fa fa-spinner fa-spin"></i> Ваш результат появится здесь после
-        расчета.
-      </div>
-
-      <div class="after-result">
-        <p>
-          Спасибо, что воспользовались нашим планером! Больше возможностей —
-          <a href="https://naletov.org/products" target="_blank">по ссылке</a>.
-        </p>
-        <a class="home-button alt" href="https://naletov.org">На главную</a>
-      </div>
-    </main>
-
-    <script src="script.js"></script>
-  </body>
+      </fieldset>
+    </div>
+  </main>
+</body>
 </html>
