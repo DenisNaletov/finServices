@@ -5,6 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>FinService Loader</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .input-hint {
+      position: relative;
+      background: #f0f8ff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px 25px 10px 10px;
+      font-size: 14px;
+      margin-top: 5px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .close-tooltip {
+      position: absolute;
+      top: 6px;
+      right: 8px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #666;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    @media screen and (max-width: 768px) {
+      .input-hint {
+        font-size: 15px;
+        max-width: 90vw;
+      }
+    }
+  </style>
   <script>
     const map = {
       bizru: "finServiceRuSmallBusiness",
@@ -34,7 +64,23 @@
             <a href="https://naletov.org/products/" class="btn">Выбор продукта</a>
             <a href="https://naletov.org/" class="btn btn-secondary">На главную</a>
           </div>
+
+          <div class="input-with-icon">
+            <i class="fa fa-arrow-up"></i>
+            <input type="number" name="revenueGrowthPercent" placeholder="Рост, %"/>
+            <div class="input-hint">
+              <span class="close-tooltip">&times;</span>
+              Запланируйте рост выручки, например 2 % от начального значения ежемесячной выручки
+            </div>
+          </div>
         `;
+
+        // навешиваем обработчики на крестики
+        document.querySelectorAll('.close-tooltip').forEach(btn => {
+          btn.addEventListener('click', () => {
+            btn.parentElement.style.display = 'none';
+          });
+        });
       }
     });
   </script>
