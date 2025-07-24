@@ -19,7 +19,7 @@
       let target = "";
 
       if (model) {
-        target = model;
+        target = model; // приоритет model, если есть
       } else if (product && map[product]) {
         target = map[product];
       }
