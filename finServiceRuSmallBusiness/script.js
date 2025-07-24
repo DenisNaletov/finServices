@@ -80,6 +80,35 @@ document.getElementById("details-toggler").addEventListener("click", (e) => {
   }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  // Добавляем крестики ко всем подсказкам
+  document.querySelectorAll(".input-hint").forEach(hint => {
+    if (!hint.querySelector(".close-tooltip")) {
+      const closeBtn = document.createElement("span");
+      closeBtn.innerHTML = "&times;";
+      closeBtn.classList.add("close-tooltip");
+      closeBtn.addEventListener("click", () => hint.style.display = "none");
+      hint.prepend(closeBtn);
+    }
+
+    // Находим input/select в том же контейнере
+    const parent = hint.closest(".input-with-icon");
+    if (parent) {
+      const input = parent.querySelector("input, select, textarea");
+      if (input) {
+        // Закрываем подсказку при вводе или выборе
+        input.addEventListener("input", () => hint.style.display = "none");
+        input.addEventListener("change", () => hint.style.display = "none");
+        input.addEventListener("focus", () => {
+          // Если пользователь возвращается к полю, можно показать подсказку снова
+          // но только если он сам не закрыл её крестиком
+          if (hint.style.display !== "none") hint.style.display = "block";
+        });
+      }
+    }
+  });
+});
+
 function hideTooltip(id) {
   const el = document.getElementById(id);
   if (el) el.style.display = "none";
