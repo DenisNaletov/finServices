@@ -2,89 +2,72 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>FinService Loader</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Финансовый расчет</title>
   <link rel="stylesheet" href="style.css" />
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      // Логика редиректа
-      const map = {
-        bizru: "finServiceRuSmallBusiness",
-        ipoteka: "finServiceIpotekaRu"
-      };
-
-      const params = new URLSearchParams(window.location.search);
-      const product = params.get("product");
-      const model = params.get("model");
-
-      let target = model || (product && map[product]);
-
-      if (target) {
-        window.location.href = `/${target}/index.html`;
-      } else {
-        document.getElementById("main-content").innerHTML = `
-          <h2>Ошибка: продукт не выбран</h2>
-          <p>Пожалуйста, выберите нужный продукт на сайте.</p>
-          <div class="button-container">
-            <a href="https://naletov.org/products/" class="btn">Выбор продукта</a>
-            <a href="https://naletov.org/" class="btn btn-secondary">На главную</a>
-          </div>
-        `;
-      }
-
-      // Логика закрытия подсказок
-      document.addEventListener("click", (e) => {
-        if (e.target.classList.contains("close-tooltip")) {
-          const hint = e.target.closest(".input-hint");
-          hint.style.display = "none";
-        }
-      });
-    });
-  </script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
-
 <body>
   <header class="header">
     <div class="logo-section">
-      <img src="LogoUpGrowSmall2.png" alt="Logo" />
+      <img src="../LogoUpGrowSmall2.png" alt="Logo" />
       <span>Up&Grow Business Planner</span>
     </div>
   </header>
 
-  <main id="main-content" class="main-section">
-    <div class="form-container">
+  <main class="main-section">
+    <h1>Финансовый расчет</h1>
+    <p class="hint">Заполните форму, чтобы получить расчет финансовых показателей.</p>
+
+    <form id="financeForm" class="form-container">
       <fieldset>
-        <legend>Пример ввода с подсказками</legend>
+        <legend>Основные параметры</legend>
         <div class="row">
           <div class="input-with-icon">
             <i class="fa fa-arrow-up"></i>
-            <input
-              type="number"
-              name="revenueGrowthPercent"
-              placeholder="Рост, %"
-            />
+            <input type="number" name="revenueGrowthPercent" placeholder="Рост, %" />
             <div class="input-hint">
               <span class="close-tooltip">&times;</span>
-              Запланируйте рост выручки, например 2 % от начального значения
-              ежемесячной выручки
+              Запланируйте рост выручки, например 2 % от начального значения ежемесячной выручки
             </div>
           </div>
 
           <div class="input-with-icon">
-            <i class="fa fa-dollar-sign"></i>
-            <select name="pricingModel">
-              <option value="">Выберите модель</option>
-              <option value="fixed">Фиксированная</option>
-              <option value="dynamic">Динамическая</option>
-            </select>
+            <i class="fa fa-dollar"></i>
+            <input type="number" name="initialRevenue" placeholder="Выручка, ₽" />
             <div class="input-hint">
               <span class="close-tooltip">&times;</span>
-              Выберите модель ценообразования
+              Укажите начальную ежемесячную выручку вашего бизнеса
+            </div>
+          </div>
+
+          <div class="input-with-icon">
+            <i class="fa fa-percent"></i>
+            <input type="number" name="margin" placeholder="Маржа, %" />
+            <div class="input-hint">
+              <span class="close-tooltip">&times;</span>
+              Укажите среднюю маржу, например 20 %
             </div>
           </div>
         </div>
       </fieldset>
-    </div>
+
+      <button type="submit">Рассчитать</button>
+      <p class="privacy">Нажимая «Рассчитать», вы соглашаетесь с <a href="#">политикой конфиденциальности</a>.</p>
+    </form>
+
+    <div id="result" class="result-box" style="display:none;"></div>
   </main>
+
+  <script src="script.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".close-tooltip").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          e.target.parentElement.style.display = "none";
+        });
+      });
+    });
+  </script>
 </body>
 </html>
