@@ -1,1 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/actionRuService", "destination": "/actionRuService/index.html" },
+    { "source": "/finServiceILSmallBusiness", "destination": "/finServiceILSmallBusiness/index.html" },
+    { "source": "/hypothecRuService", "destination": "/hypothecRuService/index.html" },
+        { "source": "/hypothecILService", "destination": "/hypothecILService/index.html" },
+            { "source": "/finServiceRuSmallBusiness", "destination": "/finServiceRuSmallBusiness/index.html" }
+
+
+
+  ]
+}
 
